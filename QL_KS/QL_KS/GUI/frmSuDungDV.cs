@@ -1,0 +1,163 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace QL_KS.GUI
+{
+    public partial class frmSuDungDV : Form
+    {
+        private DAL_SuDungDichVu DAL_SuDung = new DAL_SuDungDichVu();
+        private EC_SuDungDichVu EC_SuDung = new EC_SuDungDichVu();
+        private int _dong;
+        private bool _chon = false;
+        private bool _them = false;
+        private bool _xoa = false;
+        private bool _koload = true;
+        private string _Gia;
+        public frmSuDungDV()
+        {
+            InitializeComponent();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (!_chon)
+            {
+                labNgay.Text = DateTime.Today.ToShortDateString();
+                labGio.Text = DateTime.Now.ToLongTimeString();
+            }
+        }
+
+        private void frmSuDungDV_Load(object sender, EventArgs e)
+        {
+            _koload = false;
+            var source = new AutoCompleteStringCollection();
+            DataTable tb = DAL_SuDung.getPhong();
+            cboPhong.DataSource = tb;
+            cboPhong.DisplayMember = "SoPhong";
+            cboPhong.ValueMember = "MaPh";
+            for (int _i = 0; _i < tb.Rows.Count; _i++) source.Add(tb.Rows[_i]["SoPhong"].ToString());
+            cboPhong.AutoCompleteCustomSource = source;
+
+            tb = DAL_SuDung.getDV();
+            cboDichVu.DataSource = tb;
+            cboDichVu.DisplayMember = "TenDV";
+            cboDichVu.ValueMember = "MaDV";
+            for (int _i = 0; _i < tb.Rows.Count; _i++) source.Add(tb.Rows[_i]["TenDV"].ToString());
+            cboDichVu.AutoCompleteCustomSource = source;
+
+            dgvDanhSach.DataSource = DAL_SuDung.getDanhSach();
+            if (dgvDanhSach.RowCount != 0) btnXoa.Enabled = true;
+            _koload = true;
+        }
+
+        private void dgvDanhSach_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (_koload) timer1.Enabled = false;
+            cboDichVu.SelectedIndex = -1;
+            cboDichVu.Text = dgvDanhSach.Rows[e.RowIndex].Cells["TenDV"].Value.ToString();
+            cboPhong.SelectedIndex = -1;
+            cboPhong.Text = dgvDanhSach.Rows[e.RowIndex].Cells["TenPhong"].Value.ToString();
+            txtHoaDon.Text = dgvDanhSach.Rows[e.RowIndex].Cells["MaHD"].Value.ToString();
+            string s = dgvDanhSach.Rows[e.RowIndex].Cells["ThoiGian"].Value.ToString();
+            labNgay.Text = s.Substring(0, 11);
+            labGio.Text = s.Substring(11, s.Length - 11);
+            _dong = e.RowIndex;
+        }
+
+        private void cboPhong_TextChanged(object sender, EventArgs e)
+        {
+            if (_them)
+            {
+                txtHoaDon.Text = DAL_SuDung.getMaHD(cboPhong.Text);
+            }
+        }
+
+        private void cboPhong_Validated(object sender, EventArgs e)
+        {
+            if (cboPhong.SelectedValue == null)
+            {
+                MessageBox.Show("Không có Phòng");
+                cboPhong.Focus();
+            }
+            if (txtHoaDon.Text == "")
+            {
+                MessageBox.Show("Phòng chưa được thuê");
+                cboPhong.Focus();
+            }
+        }
+
+        private void cboDichVu_Validated(object sender, EventArgs e)
+        {
+            if (cboDichVu.SelectedValue == null)
+            {
+                MessageBox.Show("Không có Dich vụ");
+                cboDichVu.Focus();
+            }
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            timer1_Tick(null, null);
+            dgvDanhSach.DataSource = DAL_SuDung.getDanhSach();
+            btnThem.Enabled = true;
+            btnLuu.Enabled = false;
+            cboDichVu.Enabled = false;
+            cboPhong.Enabled = false;
+            dtpThoiGian.ResetText();
+            txtTimPhong.Clear();
+            txtTimDV.Clear();
+            timer1.Enabled = true;
+        }
+
+        private void cboDichVu_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_koload && cboDichVu.SelectedValue != null)
+            {
+                DAL_DichVu DV = new DAL_DichVu();
+                _Gia = DV.GetGia(cboDichVu.SelectedValue.ToString());
+            }
+        }
+
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnLuu_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtTimPhong_Click(object sender, EventArgs e)
+        {
+            txtTimPhong.Text = "";
+        }
+
+        private void txtTimDV_Click(object sender, EventArgs e)
+        {
+            txtTimDV.Text = "";
+        }
+
+        private void txtTimPhong_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtTimDV_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
