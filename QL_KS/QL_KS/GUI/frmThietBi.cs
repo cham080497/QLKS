@@ -84,29 +84,120 @@ namespace QL_KS.GUI
         }
         private void btnCapNhap_Click(object sender, EventArgs e)
         {
-
+            DataTable tbl = dal_tb.TaoBang("");
+            dgvDanhSach.DataSource = tbl;
         }
 
 
         private void btnSua_Click(object sender, EventArgs e)
         {
-
+            //kich hoat cac chuc năng
+            btnThem.Enabled = false;
+            btnSua.Enabled = false;
+            btnXoa.Enabled = false;
+            btnLuu.Enabled = true;
+            MoDieuKhien();
+            txtThietBi.ReadOnly = true;
+            cboMaPh.Enabled = false;
+            themmoi = false;
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
+            DialogResult xacnhan;
+            xacnhan = MessageBox.Show("Bạn có chắc chắn muốn xóa không??", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (xacnhan == DialogResult.OK)
+            {
+                ec.MaPh = cboMaPh.Text;
+                ec.ThietBi = txtThietBi.Text;
+                if (dal_tb.XoaTTThietBi(ec) == 0)
+                {
 
+                    MessageBox.Show("Không thể xoá!!!", "Thông báo???", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    dal_tb.XoaTTThietBi(ec);
+                    MessageBox.Show("Đã xóa thành công!");
+                    btnCapNhap_Click(sender, e);
+                    SetNull();
+
+                }
+            }
         }
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
+            if (txtThietBi.Text == "" || txtSoLuong.Text == "" || txtNhaSanXuat.Text == "" || cboMaPh.Text == "")
+            {
+                MessageBox.Show("Xin mời nhập thông tin đầy đủ");
+                KhoaDieuKhien();
+                return;
+            }
+            else
+            {
+                if (themmoi == true)/*đang ở trang thái thêm mới*/
+                {
+                    try
+                    {
+                        ec.ThietBi = txtThietBi.Text;
+                        ec.MaPh = cboMaPh.Text;
+                        ec.SoLuong = int.Parse(txtSoLuong.Text);
+                        ec.NhaSanXuat = txtNhaSanXuat.Text;
 
+                        dal_tb.ThemThongTin(ec);
+                        MessageBox.Show("Đã thêm mới thành công");/*dòng thông báo*/
+                        btnCapNhap_Click(sender, e);
+                        SetNull();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Lỗi");
+                        return;
+                    }
+
+                }
+                else
+                {
+                    try
+                    {
+                        ec.ThietBi = txtThietBi.Text;
+                        ec.MaPh = cboMaPh.Text;
+                        ec.SoLuong = int.Parse(txtSoLuong.Text);
+                        ec.NhaSanXuat = txtNhaSanXuat.Text;
+                        dal_tb.SuaThongTin(ec);
+                        MessageBox.Show("Đã sửa thành công");
+                        btnCapNhap_Click(sender, e);
+                        SetNull();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Lỗi");
+                        return;
+                    }
+                }
+                SetNull();
+                KhoaDieuKhien();/*không cho thao tác*/
+                HienThi("");
+            }
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
         {
             Close();
             Dispose();
+        }
+
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+            //kich hoat cac chuc năng
+            btnSua.Enabled = false;
+            btnXoa.Enabled = false;
+            btnLuu.Enabled = true;
+            txtThietBi.Focus();
+            MoDieuKhien();
+            SetNull();
+            themmoi = true;
         }
     }
 }
