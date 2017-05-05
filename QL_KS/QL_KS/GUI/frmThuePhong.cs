@@ -84,6 +84,59 @@ namespace QL_KS.GUI
 
         private void btnThue_Click(object sender, EventArgs e)
         {
+			 for(int i = 0; i<dgvThongtin.RowCount; i++)
+            {
+                if(Convert.ToBoolean(dgvThongtin.Rows[i].Cells["Thue"].Value)== true)
+                {
+                    if (dgvThongtin.Rows[i].Cells["TrangThai"].Value.ToString() == "Đã thuê")
+                    {
+                        MessageBox.Show("Phòng " + dgvThongtin.Rows[i].Cells["SoPhong"].Value.ToString() + " đã được thuê rồi. Chọn phòng khác!");
+                        dgvThongtin.Rows[i].Cells["Thue"].Value = false;
+                        return;
+                    }
+                    if (dgvThongtin.Rows[i].Cells["TrangThai"].Value.ToString() == "Hỏng")
+                    {
+                        MessageBox.Show("Phòng " + dgvThongtin.Rows[i].Cells["SoPhong"].Value.ToString() + " đang hỏng. Chọn phòng khác!");
+                        dgvThongtin.Rows[i].Cells["Thue"].Value = false;
+                        return;
+                    }
+                    ecPT.MaPh = dgvThongtin.Rows[i].Cells["MaPh"].Value.ToString();
+                    ecPT.MaKH = txtMaKH.Text;
+                    ecPT.MaPT = txtMaPT.Text;
+                    DateTime date = DateTime.Now;
+                    ecPT.MaPhieu = date.Day.ToString() + date.Month.ToString() + date.Hour.ToString() + date.Minute.ToString() + date.Second.ToString() + dgvThongtin.Rows[i].Cells["SoPhong"].Value.ToString();
+
+                    DAL_PhieuThue dalPhieuthue = new DAL_PhieuThue();
+                    dalPhieuthue.ThemThongTin(ecPT);
+
+                    EC_Phong ecPh = new EC_Phong();
+                    ecPh.MaPh = dgvThongtin.Rows[i].Cells["MaPh"].Value.ToString();
+                    ecPh.SoPhong = dgvThongtin.Rows[i].Cells["SoPhong"].Value.ToString();
+                    ecPh.TrangThai = "Đã thuê";
+                    dalPh.SuaThongTin(ecPh);
+
+                    ecHD.MaHD = ecPT.MaPhieu;
+                    ecHD.MaPhieuThue = ecPT.MaPhieu;
+                    ecHD.ThanhTien = "0";
+                    ecHD.Gia = _Gia;
+                    if (ckcChuabiet.Checked == false) ecHD.NgayRa = dtpNgayra.Text;
+                    else ecHD.NgayRa = "";
+                    dalHD.ThemThongTin(ecHD);
+                }
+            }
+            MessageBox.Show("Thuê OK!");
+
+            DataTable tb = dalPh.ThongTinPhong("");
+            dgvThongtin.DataSource = tb;
+            for (int i = 0; i < dgvThongtin.RowCount; i++)
+            {
+                dgvThongtin.Rows[i].Cells["STT"].Value = i + 1;
+                if (dgvThongtin.Rows[i].Cells["TrangThai"].Value.ToString() == "Tốt") dgvThongtin.Rows[i].DefaultCellStyle.BackColor = Color.Lime;
+                else
+                    if (dgvThongtin.Rows[i].Cells["TrangThai"].Value.ToString() == "Đã thuê") dgvThongtin.Rows[i].DefaultCellStyle.BackColor = Color.LightSkyBlue;
+                    else
+                        if (dgvThongtin.Rows[i].Cells["TrangThai"].Value.ToString() == "Hỏng") dgvThongtin.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+            }
 
         }
 
