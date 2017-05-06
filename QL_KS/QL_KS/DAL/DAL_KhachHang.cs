@@ -15,13 +15,16 @@ namespace QL_KS
         {
             return cn.GetDataTable(@"SELECT * FROM tblKhachHang");
         }
-        public void Them(EC_KhachHang et)
+        public int Them(EC_KhachHang et)
         {
-            cn.ThucHienLenh(@"INSERT INTO tblKhachHang (MaKH,TenKH,NgaySinh,GT,SoDT,CMND,DiaChi) VALUES ('" + et.MaKH + "',N'" + et.TenKH + "','" + et.NgaySinh + "',N'" + et.GT + "','" + et.SoDT + "','" + et.CMND + "',N'" + et.DiaChi + "')");
+            string a = "1995-12-12";
+            return(cn.ThucHienLenh(@"insert into tblKhachHang values ('" + et.MaKH + "',N'" + et.TenKH + "','" + a + "',N'" + et.GT + "','" + et.SoDT + "','" + et.CMND + "',N'" + et.DiaChi + "')"));
+            //return (cn.ThucHienLenh(@"themkh  '" + et.MaKH + "',N'" + et.TenKH + "','" + et.NgaySinh + "',N'" + et.GT + "','" + et.SoDT + "','" + et.CMND + "',N'" + et.DiaChi + "'"));
         }
-        public void Sua(EC_KhachHang et)
+        public int Sua(EC_KhachHang et)
         {
-            cn.ThucHienLenh(@"UPDATE tblKhachHang SET TenKH = N'" + et.TenKH + "',NgaySinh = '" + et.NgaySinh + "',GT = N'" + et.GT + "', SoDT = '" + et.SoDT + "',CMND = '" + et.CMND + "',DiaChi = N'" + et.DiaChi + "' where MaKH = '" + et.MaKH + "'");
+            string a = "1995-12-12";
+            return (cn.ThucHienLenh(@"update tblKhachHang SET TenKH = N'" + et.TenKH + "',NgaySinh = '" + a + "',GT = N'" + et.GT + "', SoDT = '" + et.SoDT + "',CMND = '" + et.CMND + "',DiaChi = N'" + et.DiaChi + "' where MaKH = '" + et.MaKH + "'"));
         }
         public void Xoa(EC_KhachHang et)
         {
