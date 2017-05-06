@@ -127,17 +127,52 @@ namespace QL_KS.GUI
 
         private void btnThem_Click(object sender, EventArgs e)
         {
-
+            timer1_Tick(null, null);
+            timer1.Enabled = false;
+            cboPhong.Enabled = true;
+            cboDichVu.Enabled = true;
+            btnLuu.Enabled = true;
+            btnThem.Enabled = false;
+            cboPhong.ResetText();
+            cboDichVu.ResetText();
+            txtHoaDon.ResetText();
+            _them = true;
+            btnXoa.Enabled = true;
         }
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
+            EC_SuDung.MaDV = cboDichVu.SelectedValue.ToString();
+            EC_SuDung.MaHD = txtHoaDon.Text;
 
+            dtpThoiGian.Text = labNgay.Text;
+            EC_SuDung.ThoiGian = dtpThoiGian.Text + " " + labGio.Text;
+            EC_SuDung.Gia = _Gia;
+
+            DAL_SuDung.addSuDung(EC_SuDung);
+            dgvDanhSach.DataSource = DAL_SuDung.getDanhSach();
+            _them = false;
+            btnLuu.Enabled = false;
+            btnThem.Enabled = true;
+            timer1.Enabled = true;
+            cboPhong.Enabled = false;
+            cboDichVu.Enabled = false;
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-
+            _xoa = true;
+            string temp = dgvDanhSach.Rows[_dong].Cells["ThoiGian"].Value.ToString();
+            dtpThoiGian.Text = temp;
+            EC_SuDung.ThoiGian = dtpThoiGian.Text + temp.Substring(10, temp.Length - 10);
+            EC_SuDung.MaDV = cboDichVu.SelectedValue.ToString();
+            EC_SuDung.MaHD = txtHoaDon.Text;
+            DAL_SuDung.delSuDung(EC_SuDung);
+            dgvDanhSach.DataSource = DAL_SuDung.getDanhSach();
+            timer1.Enabled = true;
+            dtpThoiGian.ResetText();
+            if (dgvDanhSach.RowCount == 0) btnXoa.Enabled = false;
+            _xoa = false;
         }
 
         private void txtTimPhong_Click(object sender, EventArgs e)
@@ -152,12 +187,18 @@ namespace QL_KS.GUI
 
         private void txtTimPhong_TextChanged(object sender, EventArgs e)
         {
-
+            string dk;
+            dk = "and SoPhong like '%" + txtTimPhong.Text + "%'";
+            if (txtTimDV.Text != "") dk += " and TenDV like N'%" + txtTimDV.Text + "%'";
+            dgvDanhSach.DataSource = DAL_SuDung.getDanhSach(dk);
         }
 
         private void txtTimDV_TextChanged(object sender, EventArgs e)
         {
-
+            string dk;
+            dk = "and TenDV like N'%" + txtTimDV.Text + "%'";
+            if (txtTimPhong.Text != "") dk += " and SoPhong like '%" + txtTimPhong.Text + "%'";
+            dgvDanhSach.DataSource = DAL_SuDung.getDanhSach(dk);
         }
     }
 }
