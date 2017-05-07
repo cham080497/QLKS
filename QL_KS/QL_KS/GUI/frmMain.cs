@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace QL_KS.GUI
 {
@@ -88,7 +89,7 @@ namespace QL_KS.GUI
 
         private void help_Click(object sender, EventArgs e)
         {
-
+            Process.Start("http://quanlyks.herobo.com/");
         }
     }
 }

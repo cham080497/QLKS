@@ -45,6 +45,7 @@
             this.btnVatDung = new System.Windows.Forms.Button();
             this.btnPhong = new System.Windows.Forms.Button();
             this.btnNguoiDung = new System.Windows.Forms.Button();
+            this.asToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuChucNang.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -54,7 +55,8 @@
             this.mnuChucNang.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.mnuChucNang.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.account,
-            this.help});
+            this.help,
+            this.asToolStripMenuItem});
             this.mnuChucNang.Location = new System.Drawing.Point(0, 0);
             this.mnuChucNang.Name = "mnuChucNang";
             this.mnuChucNang.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
@@ -90,6 +92,7 @@
             // 
             this.help.ForeColor = System.Drawing.Color.Navy;
             this.help.Name = "help";
+            this.help.ShortcutKeys = System.Windows.Forms.Keys.F1;
             this.help.Size = new System.Drawing.Size(81, 23);
             this.help.Text = "Help (F1)";
             this.help.Click += new System.EventHandler(this.help_Click);
@@ -301,6 +304,12 @@
             this.btnNguoiDung.UseVisualStyleBackColor = false;
             this.btnNguoiDung.Click += new System.EventHandler(this.btnNguoiDung_Click);
             // 
+            // asToolStripMenuItem
+            // 
+            this.asToolStripMenuItem.Name = "asToolStripMenuItem";
+            this.asToolStripMenuItem.Size = new System.Drawing.Size(34, 23);
+            this.asToolStripMenuItem.Text = "as";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -348,5 +357,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.ToolStripMenuItem asToolStripMenuItem;
     }
 }
