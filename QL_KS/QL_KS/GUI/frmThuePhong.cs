@@ -64,7 +64,7 @@ namespace QL_KS.GUI
 
             //lay dl vao ec
 
-            ecHD.NgayVao = dtpNgayvao.Text;
+            ecHD.NgayVao = dtpNgayvao.Value;
             _load = false;
         }
 
@@ -100,7 +100,7 @@ namespace QL_KS.GUI
                 DateTime dateOut = dtpNgayvao.Value;
                 dateOut = dateOut.AddDays(1);
                 dtpNgayra.Value = dateOut;
-                ecHD.NgayRa = dateOut.ToShortDateString();
+                //ecHD.NgayRa = dateOut.ToShortDateString();
                 dtpNgayra.Enabled = false;
                 ckcChuabiet.Enabled = false;
             }
@@ -113,8 +113,8 @@ namespace QL_KS.GUI
 
         private void ckcChuabiet_CheckedChanged(object sender, EventArgs e)
         {
-            if (ckcChuabiet.Checked == false) ecHD.NgayRa = dtpNgayra.Value.ToShortDateString();
-            else ecHD.NgayRa = "";
+            //if (ckcChuabiet.Checked == false) ecHD.NgayRa = dtpNgayra.Value.ToShortDateString();
+            //else ecHD.NgayRa = "";
         }
     }
 }

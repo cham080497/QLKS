@@ -22,8 +22,8 @@ namespace QL_KS
             set { _MaDV = value; }
         }
 
-        private string _ThoiGian;
-        public string ThoiGian
+        private DateTime _ThoiGian;
+        public DateTime ThoiGian
         {
             get { return _ThoiGian; }
             set { _ThoiGian = value; }

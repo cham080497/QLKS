@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Data.SqlClient;
 namespace QL_KS.GUI
 {
     public partial class frmSuDungDV : Form
     {
+        DataTable dt;
         private DAL_SuDungDichVu DAL_SuDung = new DAL_SuDungDichVu();
         private EC_SuDungDichVu EC_SuDung = new EC_SuDungDichVu();
         private int _dong;
@@ -51,8 +52,8 @@ namespace QL_KS.GUI
             cboDichVu.ValueMember = "MaDV";
             for (int _i = 0; _i < tb.Rows.Count; _i++) source.Add(tb.Rows[_i]["TenDV"].ToString());
             cboDichVu.AutoCompleteCustomSource = source;
-
-            dgvDanhSach.DataSource = DAL_SuDung.getDanhSach();
+            dt = DAL_SuDung.getDanhSach();
+            dgvDanhSach.DataSource = dt;
             if (dgvDanhSach.RowCount != 0) btnXoa.Enabled = true;
             _koload = true;
         }
@@ -146,7 +147,7 @@ namespace QL_KS.GUI
             EC_SuDung.MaHD = txtHoaDon.Text;
 
             dtpThoiGian.Text = labNgay.Text;
-            EC_SuDung.ThoiGian = dtpThoiGian.Text + " " + labGio.Text;
+            EC_SuDung.ThoiGian = DateTime.Now;
             EC_SuDung.Gia = _Gia;
 
             DAL_SuDung.addSuDung(EC_SuDung);
@@ -164,7 +165,7 @@ namespace QL_KS.GUI
             _xoa = true;
             string temp = dgvDanhSach.Rows[_dong].Cells["ThoiGian"].Value.ToString();
             dtpThoiGian.Text = temp;
-            EC_SuDung.ThoiGian = dtpThoiGian.Text + temp.Substring(10, temp.Length - 10);
+            //EC_SuDung.ThoiGian = dtpThoiGian.Text + temp.Substring(10, temp.Length - 10);
             EC_SuDung.MaDV = cboDichVu.SelectedValue.ToString();
             EC_SuDung.MaHD = txtHoaDon.Text;
             DAL_SuDung.delSuDung(EC_SuDung);
@@ -187,18 +188,14 @@ namespace QL_KS.GUI
 
         private void txtTimPhong_TextChanged(object sender, EventArgs e)
         {
-            string dk;
-            dk = "and SoPhong like '%" + txtTimPhong.Text + "%'";
-            if (txtTimDV.Text != "") dk += " and TenDV like N'%" + txtTimDV.Text + "%'";
-            dgvDanhSach.DataSource = DAL_SuDung.getDanhSach(dk);
+            string st = string.Format("[SoPhong] like '%{0}%'", txtTimPhong.Text);
+            dt.DefaultView.RowFilter = st;
         }
 
         private void txtTimDV_TextChanged(object sender, EventArgs e)
         {
-            string dk;
-            dk = "and TenDV like N'%" + txtTimDV.Text + "%'";
-            if (txtTimPhong.Text != "") dk += " and SoPhong like '%" + txtTimPhong.Text + "%'";
-            dgvDanhSach.DataSource = DAL_SuDung.getDanhSach(dk);
+            string st = string.Format("[TenDV] like '%{0}%'", txtTimDV.Text);
+            dt.DefaultView.RowFilter = st;
         }
     }
 }

@@ -22,16 +22,16 @@ namespace QL_KS
             get { return _MaPhieuThue; }
             set { _MaPhieuThue = value; }
         }
-        private string _NgayVao;
+        private DateTime _NgayVao;
 
-        public string NgayVao
+        public DateTime NgayVao
         {
             get { return _NgayVao; }
             set { _NgayVao = value; }
         }
-        private string _NgayRa;
+        private DateTime _NgayRa;
 
-        public string NgayRa
+        public DateTime NgayRa
         {
             get { return _NgayRa; }
             set { _NgayRa = value; }
