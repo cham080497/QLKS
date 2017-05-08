@@ -37,7 +37,7 @@ namespace QL_KS.GUI
 
         private void cmbKhachhang_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DataTable tb = cn.GetDataTable("Select distinct h.MaHD from tblKhachHang k, tblHoaDon h, tblPhieuThue p where k.MaKH = p.MaKH and p.MaPhieu = h.MaPhieuThue and h.ThanhTien = 0 and k.MaKH='" + cmbKhachhang.SelectedValue.ToString() + "'");
+            DataTable tb = cn.GetDataTable("Select distinct h.MaHD from tblKhachHang k, tblHoaDon h, tblPhieuThue p where k.MaKH = p.MaKH and p.MaPhieu = h.MaPhieuThue and k.MaKH='" + cmbKhachhang.SelectedValue.ToString() + "'");
             cmbMahd.DataSource = tb;
             cmbMahd.DisplayMember = "MaHD";
         }
@@ -47,17 +47,7 @@ namespace QL_KS.GUI
             DataTable tb = dalHD.ThongTinThanhToan(cmbMahd.Text);
             dgvThongtin.DataSource = tb;
             dtpNgayVao.Text = cn.GetValue(@"select NgayVao from tblHoaDon where MaHD = '" + cmbMahd.Text + "'");
-            string ngayra = cn.GetValue(@"select NgayRa from tblHoaDon where MaHD = '" + cmbMahd.Text + "'");
-            if (ngayra != "01/01/1900 12:00:00 AM")
-            {
-                dtpNgayra.Text = ngayra;
-                dtpNgayra.Enabled = false;
-            }
-            else
-            {
-                dtpNgayra.ResetText();
-                dtpNgayra.Enabled = true;
-            }
+            dtpNgayra.Text = cn.GetValue(@"select NgayRa from tblHoaDon where MaHD = '" + cmbMahd.Text + "'");
         }
 
         private void btnThanhtoan_Click(object sender, EventArgs e)
@@ -71,7 +61,7 @@ namespace QL_KS.GUI
             sum += getCost(dtpNgayVao.Value,dtpNgayra.Value,_Gia);
             MessageBox.Show("Tổng số tiền thanh toán: " + sum.ToString());
             //update hoa don
-            ecHD.ThanhTien = sum.ToString();
+            ecHD.ThanhTien = sum;
             ecHD.MaHD = cmbMahd.Text;
             dalHD.ThanhToan(ecHD);
             //thay doi thong tin phong

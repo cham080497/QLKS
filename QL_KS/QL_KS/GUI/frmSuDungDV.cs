@@ -76,7 +76,7 @@ namespace QL_KS.GUI
         {
             if (_them)
             {
-                txtHoaDon.Text = DAL_SuDung.getMaHD(cboPhong.Text);
+                txtHoaDon.Text = DAL_SuDung.getMaHD("0101");
             }
         }
 
@@ -87,6 +87,7 @@ namespace QL_KS.GUI
                 MessageBox.Show("Không có Phòng");
                 cboPhong.Focus();
             }
+            txtHoaDon.Text = DAL_SuDung.getMaHD(cboPhong.Text);
             if (txtHoaDon.Text == "")
             {
                 MessageBox.Show("Phòng chưa được thuê");

@@ -20,12 +20,12 @@ namespace QL_KS
 
         public void ThemThongTin(EC_PhieuThue EC_PT)
         {
-            connect.ThucHienLenh("insert into tblPhieuThue(MaPhieu, MaKH, MaPh, MaPT) values(N'" + EC_PT.MaPhieu + "', N'" + EC_PT.MaKH + "', N'" + EC_PT.MaPh + "', N'" + EC_PT.MaPT + "')");
+            connect.ThucHienLenh("insert into tblPhieuThue(MaPhieu, MaKH, MaPh) values(N'" + EC_PT.MaPhieu + "', N'" + EC_PT.MaKH + "', N'" + EC_PT.MaPh + "')" );
         }
 
         public void SuaThongTin(EC_PhieuThue EC_PT)
         {
-            connect.ThucHienLenh("update tblPhieuThue set  MaKH = N'" + EC_PT.MaKH + "', MaPh = N'" + EC_PT.MaPh + "', MaPT =N'" + EC_PT.MaPT + "'  where MaPhieu = '" + EC_PT.MaPhieu + "'");
+            connect.ThucHienLenh("update tblPhieuThue set  MaKH = N'" + EC_PT.MaKH + "', MaPh = N'" + EC_PT.MaPh +  "'  where MaPhieu = '" + EC_PT.MaPhieu + "'");
         }
 
         public void XoaTTPhieuThue(EC_PhieuThue EC_PT)

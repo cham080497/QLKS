@@ -22,23 +22,23 @@ namespace QL_KS
             get { return _MaPhieuThue; }
             set { _MaPhieuThue = value; }
         }
-        private DateTime _NgayVao;
+        private string _NgayVao;
 
-        public DateTime NgayVao
+        public string NgayVao
         {
             get { return _NgayVao; }
             set { _NgayVao = value; }
         }
-        private DateTime _NgayRa;
+        private string _NgayRa;
 
-        public DateTime NgayRa
+        public string NgayRa
         {
             get { return _NgayRa; }
             set { _NgayRa = value; }
         }
-        private string _ThanhTien;
+        private int _ThanhTien;
 
-        public string ThanhTien
+        public int ThanhTien
         {
             get { return _ThanhTien; }
             set { _ThanhTien = value; }

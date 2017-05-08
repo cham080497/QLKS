@@ -155,12 +155,10 @@ namespace QL_KS.GUI
                 EC_NV.MaNV = txtMaNV.Text;
                 EC_NV.TenNV = txtHoTen.Text;
                 EC_NV.GioiTinh = cboGioiTinh.Text;
+                EC_NV.NgaySinh= dtpNgaySinh.Value.Year.ToString() + "-" + dtpNgaySinh.Value.Month.ToString() + "-" + dtpNgaySinh.Value.Day.ToString();
                 EC_NV.DiaChi = txtDiaChi.Text;
                 EC_NV.SoDT = txtSoDT.Text;
                 EC_NV.CMND = txtCMND.Text;
-                //if (_suangs) 
-                EC_NV.NgaySinh = dtpNgaySinh.Value;
-                //else EC_NV.NgaySinh = "";
                 DAL_NV.ThemThongTin(EC_NV);
             }
             else
@@ -174,7 +172,7 @@ namespace QL_KS.GUI
                 EC_NV.SoDT = txtSoDT.Text;
                 EC_NV.CMND = txtCMND.Text;
                 //if (_suangs)
-                    EC_NV.NgaySinh = dtpNgaySinh.Value;
+                 EC_NV.NgaySinh = dtpNgaySinh.Value.Year.ToString() + "-" + dtpNgaySinh.Value.Month.ToString() + "-" + dtpNgaySinh.Value.Day.ToString();
                 //else EC_NV.NgaySinh = "";
                 DAL_NV.SuaThongTin(EC_NV);
                 ////update tt tai khoan
@@ -230,8 +228,8 @@ namespace QL_KS.GUI
             dtpNgaySinh.Text= dt.Rows[0][2].ToString();
             cboGioiTinh.Text= dt.Rows[0][3].ToString(); ;
             txtCMND.Text= dt.Rows[0][4].ToString();
-            txtSoDT.Text= dt.Rows[0][5].ToString(); ;
-            txtDiaChi.Text= dt.Rows[0][6].ToString();
+            txtSoDT.Text= dt.Rows[0][6].ToString(); ;
+            txtDiaChi.Text= dt.Rows[0][5].ToString();
             
 
         }

@@ -44,7 +44,7 @@ namespace QL_KS.GUI
         {
             customer.MaKH = cbMaKH.Text;
             customer.TenKH = txtName.Text;
-            customer.NgaySinh = dtp.Value;
+            customer.NgaySinh = dtp.Value.Year.ToString() + "-" + dtp.Value.Month.ToString() + "-" + dtp.Value.Day.ToString();
             customer.SoDT = txtSDT.Text;
             customer.GT = cbGT.Text;
             customer.DiaChi = txtDiaChi.Text;
@@ -127,7 +127,7 @@ namespace QL_KS.GUI
                 EC_KhachHang a = new EC_KhachHang();
                 a.MaKH = cbMaKH.Text.Trim();
                 a.TenKH = txtName.Text.Trim();
-                a.NgaySinh = dtp.Value;
+                a.NgaySinh = dtp.Value.Year.ToString() + "-" + dtp.Value.Month.ToString() + "-" + dtp.Value.Day.ToString();
                 a.GT = cbGT.Text.Trim();
                 a.SoDT = txtSDT.Text.Trim();
                 a.CMND = txtCMND.Text.Trim();
@@ -157,7 +157,7 @@ namespace QL_KS.GUI
                 EC_KhachHang a = new EC_KhachHang();
                 a.MaKH = cbMaKH.Text.Trim();
                 a.TenKH = txtName.Text.Trim();
-                a.NgaySinh = dtp.Value;
+                a.NgaySinh = dtp.Value.Year.ToString() + "-" + dtp.Value.Month.ToString() + "-" + dtp.Value.Day.ToString();
                 a.GT = cbGT.Text.Trim();
                 a.SoDT = txtSDT.Text.Trim();
                 a.CMND = txtCMND.Text.Trim();

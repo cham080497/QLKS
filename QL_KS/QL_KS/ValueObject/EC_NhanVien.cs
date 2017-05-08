@@ -29,8 +29,8 @@ namespace QL_KS
             set { _GioiTinh = value; }
         }
 
-        private DateTime _NgaySinh;
-        public DateTime NgaySinh
+        private string _NgaySinh;
+        public string NgaySinh
         {
             get { return _NgaySinh; }
             set { _NgaySinh = value; }

@@ -18,7 +18,7 @@ namespace QL_KS
 
         public void ThemThongTin(EC_HoaDon EC_HD)
         {
-            connect.ThucHienLenh("insert into tblHoaDon(MaHD, MaPhieuThue, NgayVao, NgayRa, ThanhTien, DonGiaHT) values(N'" + EC_HD.MaHD + "', N'" + EC_HD.MaPhieuThue + "', '" + EC_HD.NgayVao + "', '" + EC_HD.NgayRa + "', '" + EC_HD.ThanhTien +"', " + EC_HD.Gia.ToString() + ") ");
+            connect.ThucHienLenh("insert into tblHoaDon(MaHD, MaPhieuThue, NgayVao, NgayRa, ThanhTien, DonGiaHT) values(N'" + EC_HD.MaHD + "', N'" + EC_HD.MaPhieuThue + "', '" + EC_HD.NgayVao + "', '" + EC_HD.NgayRa + "'," + EC_HD.ThanhTien +"," + EC_HD.Gia + ") ");
         }
 
         public void SuaThongTin(EC_HoaDon EC_HD)

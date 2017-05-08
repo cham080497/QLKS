@@ -64,7 +64,7 @@ namespace QL_KS.GUI
 
             //lay dl vao ec
 
-            ecHD.NgayVao = dtpNgayvao.Value;
+            ecHD.NgayVao = dtpNgayvao.Value.Year.ToString() + "-" + dtpNgayvao.Value.Month.ToString() + "-" + dtpNgayvao.Value.Day.ToString();
             _load = false;
         }
 
@@ -102,26 +102,24 @@ namespace QL_KS.GUI
                     }
                     ecPT.MaPh = dgvThongtin.Rows[i].Cells["MaPh"].Value.ToString();
                     ecPT.MaKH = txtMaKH.Text;
-                    ecPT.MaPT = txtMaPT.Text;
                     DateTime date = DateTime.Now;
                     ecPT.MaPhieu = date.Day.ToString() + date.Month.ToString() + date.Hour.ToString() + date.Minute.ToString() + date.Second.ToString() + dgvThongtin.Rows[i].Cells["SoPhong"].Value.ToString();
-
                     DAL_PhieuThue dalPhieuthue = new DAL_PhieuThue();
                     dalPhieuthue.ThemThongTin(ecPT);
+
+                    ecHD.MaHD = ecPT.MaPhieu;
+                    ecHD.MaPhieuThue = ecPT.MaPhieu;
+                    ecHD.ThanhTien = 0;
+                    ecHD.Gia = 200;
+                    ecHD.NgayVao = dtpNgayvao.Value.Year.ToString()+"-"+ dtpNgayvao.Value.Month.ToString()+"-"+dtpNgayvao.Value.Day.ToString();
+                    ecHD.NgayRa = dtpNgayra.Value.Year.ToString() + "-" + dtpNgayra.Value.Month.ToString() + "-" + dtpNgayra.Value.Day.ToString();
+                    dalHD.ThemThongTin(ecHD);
 
                     EC_Phong ecPh = new EC_Phong();
                     ecPh.MaPh = dgvThongtin.Rows[i].Cells["MaPh"].Value.ToString();
                     ecPh.SoPhong = dgvThongtin.Rows[i].Cells["SoPhong"].Value.ToString();
                     ecPh.TrangThai = "Đã thuê";
                     dalPh.SuaThongTin(ecPh);
-
-                    ecHD.MaHD = ecPT.MaPhieu;
-                    ecHD.MaPhieuThue = ecPT.MaPhieu;
-                    ecHD.ThanhTien = "0";
-                    ecHD.Gia = 0;
-                    //if (ckcChuabiet.Checked == false) ecHD.NgayRa = dtpNgayra.Text;
-                    //else ecHD.NgayRa = "";
-                    dalHD.ThemThongTin(ecHD);
                 }
             }
             MessageBox.Show("Thuê OK!");
@@ -137,37 +135,6 @@ namespace QL_KS.GUI
                     else
                         if (dgvThongtin.Rows[i].Cells["TrangThai"].Value.ToString() == "Hỏng") dgvThongtin.Rows[i].DefaultCellStyle.BackColor = Color.Red;
             }
-
-        }
-
-        private void cmbPhuongthuc_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DataTable tb = cn.GetDataTable("Select distinct MaPT, tenPT from tblPhuongThucThue");
-            if (!_load)
-            {
-                _Gia = cn.GetValue("select DonGia from tblPhuongThucThue where MaPT = '" + cmbPhuongthuc.SelectedValue.ToString() + "'");
-            }
-            txtMaPT.Text = findCode(cmbPhuongthuc.Text, "TenPT", "MaPT", tb);
-            if (cmbPhuongthuc.Text == "Qua đêm")
-            {
-                DateTime dateOut = dtpNgayvao.Value;
-                dateOut = dateOut.AddDays(1);
-                dtpNgayra.Value = dateOut;
-                //ecHD.NgayRa = dateOut.ToShortDateString();
-                dtpNgayra.Enabled = false;
-                ckcChuabiet.Enabled = false;
-            }
-            else
-            {
-                dtpNgayra.Enabled = true;
-                ckcChuabiet.Enabled = true;
-            }
-        }
-
-        private void ckcChuabiet_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (ckcChuabiet.Checked == false) ecHD.NgayRa = dtpNgayra.Value.ToShortDateString();
-            //else ecHD.NgayRa = "";
         }
     }
 }

@@ -29,12 +29,5 @@ namespace QL_KS
             get { return _MaPh; }
             set { _MaPh = value; }
         }
-        private string _MaPT;
-
-        public string MaPT
-        {
-            get { return _MaPT; }
-            set { _MaPT = value; }
-        }
     }
 }

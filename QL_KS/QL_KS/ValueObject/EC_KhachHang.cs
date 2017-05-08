@@ -20,8 +20,8 @@ namespace QL_KS
             get { return _TenKH; }
             set { _TenKH = value; }
         }
-        private DateTime _NgaySinh;
-        public DateTime NgaySinh
+        private string _NgaySinh;
+        public string NgaySinh
         {
             get { return _NgaySinh; }
             set { _NgaySinh = value; }
