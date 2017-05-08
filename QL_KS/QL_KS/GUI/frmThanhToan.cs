@@ -62,6 +62,26 @@ namespace QL_KS.GUI
 
         private void btnThanhtoan_Click(object sender, EventArgs e)
         {
+			int sum = 0;
+            for (int i = 0;i<dgvThongtin.Rows.Count;i++)
+            {
+                sum += int.Parse(dgvThongtin.Rows[i].Cells["Gia"].Value.ToString());
+            }
+            _Gia = int.Parse(cn.GetValue(@"select DonGiaHT from tblHoaDon where MaHD = '" + cmbMahd.Text + "'"));
+            sum += getCost(dtpNgayVao.Value,dtpNgayra.Value,_Gia);
+            MessageBox.Show("Tổng số tiền thanh toán: " + sum.ToString());
+            //update hoa don
+            ecHD.ThanhTien = sum.ToString();
+            ecHD.MaHD = cmbMahd.Text;
+            dalHD.ThanhToan(ecHD);
+            //thay doi thong tin phong
+            EC_Phong ph = new EC_Phong();
+            ph.MaPh = cn.GetValue(@"select MaPh from tblPhieuThue where MaPhieu = '" + cmbMahd.Text + "'");
+            ph.TrangThai = "Tốt";
+            dalPh.TraPhong(ph);
+            cmbKhachhang.ResetText();
+            cmbMahd.ResetText();
+            dgvThongtin.DataSource = null;
 
         }
 
