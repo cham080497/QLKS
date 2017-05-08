@@ -54,13 +54,13 @@ namespace QL_KS.GUI
             cmbKhachhang.DisplayMember = "tenKH";
             txtMaKH.Text = findCode(cmbKhachhang.Text, "TenKH", "MaKH", tb);
 
-            //load Phuongthuc
-            tb = cn.GetDataTable("Select distinct MaPT, TenPT from tblPhuongThucThue");
-            cmbPhuongthuc.DataSource = tb;
-            cmbPhuongthuc.DisplayMember = "TenPT";
-            cmbPhuongthuc.ValueMember = "MaPT";
-            cmbPhuongthuc.ResetText();
-            txtMaPT.Text = findCode(cmbPhuongthuc.Text, "TenPT", "MaPT", tb);
+            ////load Phuongthuc
+            //tb = cn.GetDataTable("Select distinct MaPT, TenPT from tblPhuongThucThue");
+            //cmbPhuongthuc.DataSource = tb;
+            //cmbPhuongthuc.DisplayMember = "TenPT";
+            //cmbPhuongthuc.ValueMember = "MaPT";
+            //cmbPhuongthuc.ResetText();
+            //txtMaPT.Text = findCode(cmbPhuongthuc.Text, "TenPT", "MaPT", tb);
 
             //lay dl vao ec
 
@@ -118,9 +118,9 @@ namespace QL_KS.GUI
                     ecHD.MaHD = ecPT.MaPhieu;
                     ecHD.MaPhieuThue = ecPT.MaPhieu;
                     ecHD.ThanhTien = "0";
-                    ecHD.Gia = _Gia;
-                    if (ckcChuabiet.Checked == false) ecHD.NgayRa = dtpNgayra.Text;
-                    else ecHD.NgayRa = "";
+                    ecHD.Gia = 0;
+                    //if (ckcChuabiet.Checked == false) ecHD.NgayRa = dtpNgayra.Text;
+                    //else ecHD.NgayRa = "";
                     dalHD.ThemThongTin(ecHD);
                 }
             }
