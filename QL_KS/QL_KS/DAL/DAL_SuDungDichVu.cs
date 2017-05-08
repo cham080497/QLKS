@@ -18,7 +18,7 @@ namespace QL_KS
         }
         public DataTable getDanhSach(string dk)
         {
-            return connect.GetDataTable(@"select SoPhong, TenDV,ThoiGian,Gia,tblHoaDon.MaHD from tblPhong,tblPhieuThue,tblHoaDon,tblSuDungDV,tblDichVu where tblPhong.MaPh = tblPhieuThue.MaPh and tblPhieuThue.MaPhieu = tblHoaDon.MaPhieuThue and tblHoaDon.MaHD = tblSuDungDV.MaHD and tblSuDungDV.MaDV = tblDichVu.MaDV " + dk + " order by SoPhong,ThoiGian");
+            return connect.GetDataTable(@"select SoPhong, TenDV, ThoiGian,tblHoaDon.MaHD from tblPhong,tblPhieuThue,tblHoaDon,tblSuDungDV,tblDichVu where tblPhong.MaPh = tblPhieuThue.MaPh and tblPhieuThue.MaPhieu = tblHoaDon.MaPhieuThue and tblHoaDon.MaHD = tblSuDungDV.MaHD and tblSuDungDV.MaDV = tblDichVu.MaDV order by SoPhong");
         }
 
         public void addSuDung(EC_SuDungDichVu EC_SuDung)
@@ -43,7 +43,7 @@ namespace QL_KS
 
         public string getMaHD(string MaPhong)
         {
-            return connect.GetValue(@"select MaHD from tblHoaDon, tblPhieuThue, tblPhong where tblHoaDon.ThanhTien = 0 and tblPhieuThue.MaPhieu = tblHoaDon.MaPhieuThue and tblPhieuThue.MaPh = tblPhong.MaPh and SoPhong = '" + MaPhong + "'");
+            return connect.GetValue(@"select MaHD from tblHoaDon, tblPhieuThue, tblPhong where tblPhieuThue.MaPhieu = tblHoaDon.MaPhieuThue and tblPhieuThue.MaPh = tblPhong.MaPh and SoPhong = '" + MaPhong + "'");
         }
     }
 }

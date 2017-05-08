@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Data.SqlClient;
 namespace QL_KS.GUI
 {
     public partial class frmSuDungDV : Form
     {
+        DataTable dt;
         private DAL_SuDungDichVu DAL_SuDung = new DAL_SuDungDichVu();
         private EC_SuDungDichVu EC_SuDung = new EC_SuDungDichVu();
         private int _dong;
@@ -51,8 +52,8 @@ namespace QL_KS.GUI
             cboDichVu.ValueMember = "MaDV";
             for (int _i = 0; _i < tb.Rows.Count; _i++) source.Add(tb.Rows[_i]["TenDV"].ToString());
             cboDichVu.AutoCompleteCustomSource = source;
-
-            dgvDanhSach.DataSource = DAL_SuDung.getDanhSach();
+            dt = DAL_SuDung.getDanhSach();
+            dgvDanhSach.DataSource = dt;
             if (dgvDanhSach.RowCount != 0) btnXoa.Enabled = true;
             _koload = true;
         }
@@ -127,17 +128,52 @@ namespace QL_KS.GUI
 
         private void btnThem_Click(object sender, EventArgs e)
         {
-
+            timer1_Tick(null, null);
+            timer1.Enabled = false;
+            cboPhong.Enabled = true;
+            cboDichVu.Enabled = true;
+            btnLuu.Enabled = true;
+            btnThem.Enabled = false;
+            cboPhong.ResetText();
+            cboDichVu.ResetText();
+            txtHoaDon.ResetText();
+            _them = true;
+            btnXoa.Enabled = true;
         }
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
+            EC_SuDung.MaDV = cboDichVu.SelectedValue.ToString();
+            EC_SuDung.MaHD = txtHoaDon.Text;
 
+            dtpThoiGian.Text = labNgay.Text;
+            EC_SuDung.ThoiGian = DateTime.Now;
+            EC_SuDung.Gia = _Gia;
+
+            DAL_SuDung.addSuDung(EC_SuDung);
+            dgvDanhSach.DataSource = DAL_SuDung.getDanhSach();
+            _them = false;
+            btnLuu.Enabled = false;
+            btnThem.Enabled = true;
+            timer1.Enabled = true;
+            cboPhong.Enabled = false;
+            cboDichVu.Enabled = false;
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-
+            _xoa = true;
+            string temp = dgvDanhSach.Rows[_dong].Cells["ThoiGian"].Value.ToString();
+            dtpThoiGian.Text = temp;
+            //EC_SuDung.ThoiGian = dtpThoiGian.Text + temp.Substring(10, temp.Length - 10);
+            EC_SuDung.MaDV = cboDichVu.SelectedValue.ToString();
+            EC_SuDung.MaHD = txtHoaDon.Text;
+            DAL_SuDung.delSuDung(EC_SuDung);
+            dgvDanhSach.DataSource = DAL_SuDung.getDanhSach();
+            timer1.Enabled = true;
+            dtpThoiGian.ResetText();
+            if (dgvDanhSach.RowCount == 0) btnXoa.Enabled = false;
+            _xoa = false;
         }
 
         private void txtTimPhong_Click(object sender, EventArgs e)
@@ -152,12 +188,14 @@ namespace QL_KS.GUI
 
         private void txtTimPhong_TextChanged(object sender, EventArgs e)
         {
-
+            string st = string.Format("[SoPhong] like '%{0}%'", txtTimPhong.Text);
+            dt.DefaultView.RowFilter = st;
         }
 
         private void txtTimDV_TextChanged(object sender, EventArgs e)
         {
-
+            string st = string.Format("[TenDV] like '%{0}%'", txtTimDV.Text);
+            dt.DefaultView.RowFilter = st;
         }
     }
 }
