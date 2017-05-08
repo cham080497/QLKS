@@ -44,8 +44,8 @@ namespace QL_KS
             set { _ThanhTien = value; }
         }
 
-        private string _Gia;
-        public string Gia
+        private int _Gia;
+        public int Gia
         {
             get { return _Gia; }
             set { _Gia = value; }
